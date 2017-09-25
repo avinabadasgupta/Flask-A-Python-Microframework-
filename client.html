@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script>
+		$(document).ready(function(){
+			$('form').on('submit',function(event){
+				var data=JSON.stringify({name:$('#name').val(),age:$('#age').val()});
+				$.ajax({
+					data:data,
+					type:'POST',
+					url:'/process',
+					contentType:'application/json',
+					dataType:'json'
+				}).done(function(data){
+					if(data.error){
+						alert(data.error)
+					}
+					else{
+						$('#result').text(data.name+data.message).show();
+					}
+				});
+				event.preventDefault();
+			});
+		});
+	</script>
+</head>
+<body>
+	<form>
+		User Name:<br>
+		<input type="text" id="name"><br>
+		User Age:<br>
+		<input type="text" id="age"><br>
+		<button type="submit">Submit</button>
+	</form>
+	<p id="result" style="display:none;"></p>
+</body>
+</html>
